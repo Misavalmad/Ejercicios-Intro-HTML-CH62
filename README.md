@@ -6,7 +6,7 @@ Por favor, lee atentamente las indicaciones y realiza lo solicitado.
 Debes entregar estos ejercicios en un repositorio tuyo, en la siguiente asignación:
 
 
-Ejercicio 1: Identificar y corregir el documento html
+Ejercicio 1: Identificar y corregir el documento html.
 Dírigete al archivo llamado "index.html", lee con atención, identifica los errores y corrígelos. 
 No olvides colocar comentarios sobre cada cosa que modifiques, muevas o elimines. 
 
