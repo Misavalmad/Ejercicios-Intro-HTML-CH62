@@ -66,6 +66,7 @@ h2 {
 }
 
 main {
+    position: relative;
     max-width: min(90vw, 72ch);
     margin-inline: auto;
     background: color-mix(in srgb, var(--surface) 92%, transparent);
@@ -73,6 +74,7 @@ main {
     border-radius: var(--radius);
     padding: clamp(1.25rem, 3vw, 2rem);
     box-shadow: var(--shadow);
+    overflow: visible;
 }
 
 section + section {
@@ -81,24 +83,63 @@ section + section {
     border-top: 1px solid rgba(154,127,240,.08);
 }
 
-main section:first-of-type img {
-    width: min(42vw, 260px);
-    aspect-ratio: 1/1;
-    object-fit: cover;
+.hero {
+    display: flex;
+    justify-content: center;
+    margin-bottom: clamp(1.25rem, 3vw, 2rem);
+}
+
+.hero figure { margin: 0; }
+
+.avatar img {
     display: block;
-    margin-inline: auto;
-    margin-bottom: 1.25rem;
+    object-fit: cover;
     border-radius: calc(var(--radius) + 4px);
     border: 1px solid rgba(154,127,240,.25);
     box-shadow: 0 0 0 2px rgba(180,15,42,.25) inset, 0 8px 30px rgba(0,0,0,.45), 0 0 24px rgba(154,127,240,.25);
-    filter: grayscale(.3) contrast(1.05) saturate(.85);
+    filter: grayscale(.25) contrast(1.05) saturate(.9);
     transition: transform .35s ease, filter .35s ease, box-shadow .35s ease;
+    width: min(42vw, 260px);
+    aspect-ratio: 1/1;
+    margin-inline: auto;
 }
 
-main section:first-of-type img:hover {
+.avatar img:hover {
     transform: translateY(-2px) scale(1.02);
-    filter: grayscale(.1) contrast(1.1) saturate(1);
+    filter: grayscale(.05) contrast(1.1) saturate(1);
     box-shadow: 0 0 0 2px rgba(180,15,42,.4) inset, 0 12px 40px rgba(0,0,0,.55), 0 0 36px rgba(154,127,240,.4);
+}
+
+.side-floater {
+    position: absolute;
+    top: clamp(1.5rem, 8vw, 4rem);
+    height: clamp(55vh, 70vh, 78vh);
+    width: auto;
+    pointer-events: none;
+    filter: drop-shadow(0 0 28px rgba(154,127,240,.45)) drop-shadow(0 14px 40px rgba(0,0,0,.55));
+}
+
+.side-floater img {
+    display: block;
+    height: 100%;
+    width: auto;
+    object-fit: cover;
+    border-radius: calc(var(--radius) + 6px);
+    filter: grayscale(.08) contrast(1.08) saturate(.98);
+}
+
+.side-floater-left {
+    left: calc(-1 * min(18vw, 140px));
+    transform: rotate(-2deg);
+}
+
+.side-floater-right {
+    right: calc(-1 * min(18vw, 140px));
+    transform: rotate(2deg);
+}
+
+@media (max-width: 860px) {
+    .side-floater { display: none; }
 }
 
 p {
