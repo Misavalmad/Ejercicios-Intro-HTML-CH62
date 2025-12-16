@@ -63,14 +63,69 @@
 
     <footer>
         <p>&copy; 2025 Misaladitas was here</p>
-        <audio id="bgAudio" loop controls>
-            <source src="Resident Evil Code Veronica X - A moment of Relief (Save room).mp3" type="audio/mpeg">
-            Tu navegador no soporta el elemento de audio.
-        </audio>
+        <div class="audio-player">
+            <audio id="bgAudio">
+                <source src="Resident Evil Code Veronica X - A moment of Relief (Save room).mp3" type="audio/mpeg">
+            </audio>
+            <button id="playBtn" class="audio-btn">▶</button>
+            <div class="audio-progress-container">
+                <span id="currentTime" class="audio-time">0:00</span>
+                <input type="range" id="progressBar" class="audio-progress" value="0" min="0" max="100">
+                <span id="duration" class="audio-time">0:00</span>
+            </div>
+            <button id="volumeBtn" class="audio-btn">🔊</button>
+            <input type="range" id="volumeBar" class="audio-volume" value="100" min="0" max="100">
+        </div>
     </footer>
 
     <script>
         const audio = document.getElementById('bgAudio');
+        const playBtn = document.getElementById('playBtn');
+        const progressBar = document.getElementById('progressBar');
+        const currentTimeEl = document.getElementById('currentTime');
+        const durationEl = document.getElementById('duration');
+        const volumeBtn = document.getElementById('volumeBtn');
+        const volumeBar = document.getElementById('volumeBar');
+
+        function formatTime(seconds) {
+            if (!seconds || isNaN(seconds)) return '0:00';
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        }
+
+        playBtn.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play();
+                playBtn.textContent = '⏸';
+            } else {
+                audio.pause();
+                playBtn.textContent = '▶';
+            }
+        });
+
+        audio.addEventListener('timeupdate', () => {
+            progressBar.value = (audio.currentTime / audio.duration) * 100 || 0;
+            currentTimeEl.textContent = formatTime(audio.currentTime);
+        });
+
+        audio.addEventListener('loadedmetadata', () => {
+            durationEl.textContent = formatTime(audio.duration);
+        });
+
+        progressBar.addEventListener('input', () => {
+            audio.currentTime = (progressBar.value / 100) * audio.duration;
+        });
+
+        volumeBar.addEventListener('input', () => {
+            audio.volume = volumeBar.value / 100;
+        });
+
+        audio.addEventListener('ended', () => {
+            playBtn.textContent = '▶';
+        });
+
+        // Intentar reproducir al cargar
         audio.play().catch(() => {
             document.addEventListener('click', () => audio.play(), { once: true });
         });
